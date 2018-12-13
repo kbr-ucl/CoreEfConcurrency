@@ -12,11 +12,20 @@ namespace CoreEfConcurrency.Model
 		{
 			optionsBuilder.UseSqlServer(@"Server=.;Database=MyCMS;Trusted_Connection=True;");
 		}
+
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
+			modelBuilder.Entity<Blog>().HasData(new Blog {Id = 1, Url = "http://sample.com"});
+			modelBuilder.Entity<Post>().HasData(
+				new Post {BlogId = 1, Id = 1, Title = "First post", Content = "Test 1"});
+			modelBuilder.Entity<Post>().HasData(
+				new {BlogId = 1, Id = 2, Title = "Second post", Content = "Test 2"});
+		}
 	}
 
 	public class Blog
 	{
-		public int BlogId { get; set; }
+		public int Id { get; set; }
 		public string Url { get; set; }
 
 		public ICollection<Post> Posts { get; set; }
@@ -24,7 +33,7 @@ namespace CoreEfConcurrency.Model
 
 	public class Post
 	{
-		public int PostId { get; set; }
+		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Content { get; set; }
 
