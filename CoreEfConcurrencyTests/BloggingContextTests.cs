@@ -1,0 +1,84 @@
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using CoreEfConcurrency.Model;
+using Microsoft.EntityFrameworkCore;
+using Xunit;
+
+namespace CoreEfConcurrencyTests
+{
+	public class BloggingContextTests
+	{
+		[Fact]
+		public void No_Concurrency_Db_Update()
+		{
+			// Arrange
+			var expected = 1;
+			using (var sut = new BloggingContext())
+			{
+				var post = sut.Posts.FirstOrDefault(a => a.Id == 1);
+				post.Title += " 1";
+
+				// Act
+				var actual = sut.SaveChanges();
+
+				// Assert
+				Assert.Equal(expected, actual);
+			}
+		}
+
+		[Fact]
+		public void No_Concurrency_Db_Works()
+		{
+			// Arrange
+			using (var sut = new BloggingContext())
+			{
+				// Act
+				var post = sut.Posts.FirstOrDefault(a => a.Id == 1);
+
+				// Assert
+				Assert.NotNull(post);
+			}
+		}
+
+		[Fact]
+		public void Concurrency_Db_Update_Exception()
+		{
+			// Arrange
+			using (var sut = new BloggingContext())
+			{
+				var post = sut.Posts.FirstOrDefault(a => a.Id == 1);
+				post.Title += " 1";
+
+				// Act
+
+				using (var context = new BloggingContext())
+				{
+					var post2 = context.Posts.FirstOrDefault(a => a.Id == 1);
+					post2.Title += " 1";
+					context.SaveChanges();
+				}
+
+				// Assert
+				Assert.Throws<DbUpdateConcurrencyException>(() => sut.SaveChanges());
+			}
+		}
+
+		[Fact]
+		public void Concurrency_Db_Update_External_Exception()
+		{
+			// Arrange
+			using (var sut = new BloggingContext())
+			{
+				var post = sut.Posts.FirstOrDefault(a => a.Id == 1);
+				post.Title += " 1";
+
+				// Act
+
+				// Assert
+				Assert.Throws<DbUpdateConcurrencyException>(() => sut.SaveChanges());
+			}
+		}
+	}
+}
