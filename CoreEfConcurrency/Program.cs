@@ -11,7 +11,6 @@ namespace CoreEfConcurrency
 			{
 
 			}
-				Console.WriteLine("Hello World!");
 		}
 	}
 }
