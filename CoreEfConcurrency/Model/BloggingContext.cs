@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoreEfConcurrency.Model
@@ -29,6 +30,8 @@ namespace CoreEfConcurrency.Model
 	{
 		public int Id { get; set; }
 		public string Url { get; set; }
+		public int BlogId { get; set; }
+		[Timestamp]
 
 		public ICollection<Post> Posts { get; set; }
 	}
@@ -38,8 +41,10 @@ namespace CoreEfConcurrency.Model
 		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Content { get; set; }
-
 		public int BlogId { get; set; }
+		[Timestamp]
+		public byte[] Version { get; set; }
+
 		public Blog Blog { get; set; }
 	}
 }
