@@ -6,14 +6,14 @@ namespace CoreEfConcurrency.Model
 {
 	public class BloggingContext : DbContext
 	{
-		private readonly string _connectionString = @"Server=.;Database=MyCMS;Trusted_Connection=True;";
+		public static readonly string ConnectionString = @"Server=.;Database=MyCMS;Trusted_Connection=True;";
 
 		public DbSet<Blog> Blogs { get; set; }
 		public DbSet<Post> Posts { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlServer(_connectionString);
+			optionsBuilder.UseSqlServer(ConnectionString);
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
