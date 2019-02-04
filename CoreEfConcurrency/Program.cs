@@ -7,10 +7,10 @@ namespace CoreEfConcurrency
 	{
 		static void Main(string[] args)
 		{
-			using (var context = new BloggingContext())
-			{
+			//using (var context = new BloggingContext())
+			//{
 
-			}
+			//}
 		}
 	}
 }
