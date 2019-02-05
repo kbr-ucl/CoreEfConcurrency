@@ -32,6 +32,7 @@ namespace CoreEfConcurrency.Model
 		public string Url { get; set; }
 		public int BlogId { get; set; }
 		[Timestamp]
+		public byte[] Version { get; set; }
 
 		public ICollection<Post> Posts { get; set; }
 	}
