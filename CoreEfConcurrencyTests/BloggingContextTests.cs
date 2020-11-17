@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System.Linq;
 using CoreEfConcurrency.Model;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Xunit;
 
