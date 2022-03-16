@@ -1,16 +1,12 @@
-﻿using System;
-using CoreEfConcurrency.Model;
+﻿namespace CoreEfConcurrency;
 
-namespace CoreEfConcurrency
+internal class Program
 {
-	class Program
-	{
-		static void Main(string[] args)
-		{
-			//using (var context = new BloggingContext())
-			//{
+    private static void Main(string[] args)
+    {
+        //using (var context = new BloggingContext())
+        //{
 
-			//}
-		}
-	}
+        //}
+    }
 }
